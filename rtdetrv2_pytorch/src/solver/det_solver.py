@@ -64,7 +64,8 @@ class DetSolver(BaseSolver):
                     dist_utils.save_on_master(self.state_dict(), checkpoint_path)
 
             module = self.ema.module if self.ema else self.model
-            test_stats, coco_evaluator = evaluate(
+            # dont need results for eval in fit
+            test_stats, coco_evaluator, _ = evaluate(
                 module, 
                 self.criterion, 
                 self.postprocessor, 
@@ -122,10 +123,10 @@ class DetSolver(BaseSolver):
         self.eval()
         
         module = self.ema.module if self.ema else self.model
-        test_stats, coco_evaluator = evaluate(module, self.criterion, self.postprocessor,
+        test_stats, coco_evaluator, det_results = evaluate(module, self.criterion, self.postprocessor,
                 self.val_dataloader, self.evaluator, self.device)
                 
         if self.output_dir:
             dist_utils.save_on_master(coco_evaluator.coco_eval["bbox"].eval, self.output_dir / "eval.pth")
-        
+            dist_utils.save_on_master(det_results, self.output_dir / "results.pth")
         return

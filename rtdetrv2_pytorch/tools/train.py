@@ -33,6 +33,7 @@ def main(args, ) -> None:
         solver.val()
     else:
         solver.fit()
+        solver.val()
 
     dist_utils.cleanup()
     
