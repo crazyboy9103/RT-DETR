@@ -173,12 +173,12 @@ class PResNet(nn.Module):
         ch_in = 64
         if variant in ['c', 'd']:
             conv_def = [
-                [3, ch_in // 2, 3, 2, "conv1_1"],
+                [1, ch_in // 2, 3, 2, "conv1_1"],
                 [ch_in // 2, ch_in // 2, 3, 1, "conv1_2"],
                 [ch_in // 2, ch_in, 3, 1, "conv1_3"],
             ]
         else:
-            conv_def = [[3, ch_in, 7, 2, "conv1_1"]]
+            conv_def = [[1, ch_in, 7, 2, "conv1_1"]]
 
         self.conv1 = nn.Sequential(OrderedDict([
             (name, ConvNormLayer(cin, cout, k, s, act=act)) for cin, cout, k, s, name in conv_def

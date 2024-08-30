@@ -32,6 +32,7 @@ Resize = register()(T.Resize)
 SanitizeBoundingBoxes = register(name='SanitizeBoundingBoxes')(SanitizeBoundingBoxes)
 RandomCrop = register()(T.RandomCrop)
 Normalize = register()(T.Normalize)
+Grayscale = register()(T.Grayscale)
 
 
 @register()
